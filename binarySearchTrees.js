@@ -25,5 +25,40 @@ function Tree (arr){
 //and turns it into a balanced binary tree full of Node objects appropriately placed
 //(don’t forget to sort and remove duplicates!). The buildTree function should return the level-0 root node.
 function buildTree (arr){
+  let sortedArrWithoutDuplicates = mergeSort(arr).filter((value, index, array) => {return array.indexOf(value) === index})
+  return sortedArrWithoutDuplicates
+}
+
+
+function mergeSort(array){
+  if (array.length < 2){
+      return array
+  } else {
+      let midPoint = array.length/2
+      let firstHalf = mergeSort(array.slice(0, midPoint))
+      let secondHalf = mergeSort(array.slice(midPoint, array.length))
+
+      let mergedArray = []
+
+      while (mergedArray.length < array.length){
+
+          if (firstHalf[0] < secondHalf[0]){
+              mergedArray.push(firstHalf[0])
+              firstHalf.shift()
+          } else if (secondHalf[0] !== undefined){//comparing a number to undefined is always false
+              mergedArray.push(secondHalf[0])
+              secondHalf.shift()
+          } else {
+              mergedArray.push(firstHalf[0])
+          }
+      }
+      return mergedArray
+  }
+}
+
+let exampleArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+console.log(buildTree(exampleArray))
+
+let removeDuplicates = function (arr){
 
 }
