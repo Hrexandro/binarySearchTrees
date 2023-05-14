@@ -29,8 +29,8 @@ function buildTree (arr){
   let sortedArrWithoutDuplicates = mergeSort(arr).filter((value, index, array) => {return array.indexOf(value) === index})
   let midPoint = parseInt((sortedArrWithoutDuplicates.length - 1) / 2)
   let rootData = sortedArrWithoutDuplicates[midPoint]
-  let right = buildTree(sortedArrWithoutDuplicates.slice(midPoint + 1))
   let left = buildTree(sortedArrWithoutDuplicates.slice(0, midPoint))
+  let right = buildTree(sortedArrWithoutDuplicates.slice(midPoint + 1))
   let root = Node(rootData, left, right)
 
   return root
@@ -41,10 +41,10 @@ function mergeSort(array){
   if (array.length < 2){
       return array
   } else {
-      let midPoint = array.length/2
+      let midPoint = parseInt(array.length/2)
       let firstHalf = mergeSort(array.slice(0, midPoint))
       let secondHalf = mergeSort(array.slice(midPoint, array.length))
-
+      
       let mergedArray = []
 
       while (mergedArray.length < array.length){
@@ -57,6 +57,7 @@ function mergeSort(array){
               secondHalf.shift()
           } else {
               mergedArray.push(firstHalf[0])
+              firstHalf.shift()
           }
       }
       return mergedArray
@@ -74,7 +75,8 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
   }
 }
-let exampleArray = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
-//console.log(buildTree(exampleArray))
+
+let exampleArray = [10, 14, 803, 1409, 937, 10743, 2, 702, 103, 81, 36, 7]
+
 
 prettyPrint(buildTree(exampleArray))
