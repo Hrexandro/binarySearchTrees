@@ -86,20 +86,19 @@ function Tree (arr){
           this.add(value, currentNode.right)
         }
       }
-      // if (currentNode === null){//changing the .right or .left of a node works, but working on a null node from within DOES NOT
-      //   console.log('should add')
-      //   console.log(currentNode)
-      //   currentNode = Node(value)
-      //   console.log(currentNode)
-      // } else if (currentNode.data === value){
-      //   console.log('already here')
-      //   return
-      // } else if (currentNode.data > value){
-      //   console.log(currentNode)
-      //   this.add(value, currentNode.left)
-      // } else if (currentNode.data < value){
-      //   this.add(value, currentNode.right)
-      // }
+    },
+    delete: function(value, currentNode = this.root){
+      if (currentNode.data === value && currentNode.left === null && currentNode.right === null){
+        console.log('data to delete found')
+        console.log(currentNode)
+        currentNode = null //working on current node does not update the Tree, can be rewritten using right/left, but there will be A LOT of if statements which I'd like to avoid
+        console.log(currentNode)
+      } else if (currentNode.data > value){
+        this.delete(value, currentNode.left)
+      } else if (currentNode.data < value){
+        this.delete(value, currentNode.right)
+      }
+
     }
   };
 }
@@ -138,6 +137,8 @@ console.log(exampleTree.find(1))
 exampleTree.add(1656645)
 exampleTree.add(165664533)
 exampleTree.add(165)
+prettyPrint(exampleTree.root)
+exampleTree.delete(165)
 prettyPrint(exampleTree.root)
 // console.log(exampleTree)
 
