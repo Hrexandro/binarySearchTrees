@@ -39,7 +39,7 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 
 //Build a Node class / factory. It should have an attribute for the data it stores as well as its left and right children.
 
-function Node (data, left, right){
+function Node (data, left = null, right = null){
   return {
     data,
     left,
@@ -66,6 +66,25 @@ function Tree (arr){
         return result
       }
       return null
+    },
+    add: function(value, currentNode = this.root){
+
+
+
+      if (currentNode === null){
+        console.log('should add')
+        console.log(currentNode)
+        currentNode = Node(value)
+        console.log(currentNode)
+      } else if (currentNode.data === value){
+        console.log('already here')
+        return
+      } else if (currentNode.data > value){
+        console.log(currentNode)
+        this.add(value, currentNode.left)
+      } else if (currentNode.data < value){
+        this.add(value, currentNode.right)
+      }
     }
   };
 }
@@ -94,10 +113,14 @@ function buildTree (arr){
 
 
 
-let exampleArray = [10, 14, 803, 1409, 937, 10743, 2, 702, 103, 81, 36, 7]
+//let exampleArray = [10, 14, 803, 1409, 937, 10743, 2, 702, 103, 81, 36, 7]
+let exampleArray = []
 let exampleTree = Tree(exampleArray)
 // prettyPrint(buildTree(exampleArray))
 prettyPrint(exampleTree.root)
-// //console.log(buildTree(exampleArray))
+// // //console.log(buildTree(exampleArray))
+exampleTree.add(2)
+prettyPrint(exampleTree.root)
+console.log(exampleTree)
 
-console.log(exampleTree.find(4))
+
