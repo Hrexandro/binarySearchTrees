@@ -68,23 +68,38 @@ function Tree (arr){
       return null
     },
     add: function(value, currentNode = this.root){
-
-
-
-      if (currentNode === null){
-        console.log('should add')
-        console.log(currentNode)
-        currentNode = Node(value)
-        console.log(currentNode)
+      if (this.root === null){
+        this.root = Node(value)
+        return
       } else if (currentNode.data === value){
-        console.log('already here')
         return
       } else if (currentNode.data > value){
-        console.log(currentNode)
-        this.add(value, currentNode.left)
+        if (currentNode.left === null){
+          currentNode.left = Node(value)
+        } else {
+          this.add(value, currentNode.left)
+        }
       } else if (currentNode.data < value){
-        this.add(value, currentNode.right)
+        if (currentNode.right === null){
+          currentNode.right = Node(value)
+        } else {
+          this.add(value, currentNode.right)
+        }
       }
+      // if (currentNode === null){//changing the .right or .left of a node works, but working on a null node from within DOES NOT
+      //   console.log('should add')
+      //   console.log(currentNode)
+      //   currentNode = Node(value)
+      //   console.log(currentNode)
+      // } else if (currentNode.data === value){
+      //   console.log('already here')
+      //   return
+      // } else if (currentNode.data > value){
+      //   console.log(currentNode)
+      //   this.add(value, currentNode.left)
+      // } else if (currentNode.data < value){
+      //   this.add(value, currentNode.right)
+      // }
     }
   };
 }
@@ -113,14 +128,17 @@ function buildTree (arr){
 
 
 
-//let exampleArray = [10, 14, 803, 1409, 937, 10743, 2, 702, 103, 81, 36, 7]
-let exampleArray = []
+let exampleArray = [10, 14, 803, 1409, 937, 10743, 2, 702, 103, 81, 36, 7]
+//let exampleArray = [] //also make sure this case works
 let exampleTree = Tree(exampleArray)
 // prettyPrint(buildTree(exampleArray))
 prettyPrint(exampleTree.root)
 // // //console.log(buildTree(exampleArray))
-exampleTree.add(2)
+console.log(exampleTree.find(1))
+exampleTree.add(1656645)
+exampleTree.add(165664533)
+exampleTree.add(165)
 prettyPrint(exampleTree.root)
-console.log(exampleTree)
+// console.log(exampleTree)
 
 
