@@ -91,6 +91,10 @@ function Tree (arr){
       function isLeaf(node){
         return (node.left === null && node.right === null)
       }
+      function findLeftmostChild (value, currentNode){
+        if (currentNode){}
+      }
+
       if (currentNode.left.data === value){//left has value
         if (isLeaf(currentNode.left)){
         currentNode.left = null
@@ -99,6 +103,7 @@ function Tree (arr){
         } else if (currentNode.left.right === null){
           currentNode.left = currentNode.left.left
         } else {
+          let toSubstitute = findLeftmostChild(currentNode.left.right)
           // has two children, find the leftmost node of the right subtree
         }
       } else if (currentNode.right.data === value ){//right has value
@@ -110,6 +115,7 @@ function Tree (arr){
           currentNode.right = currentNode.left.left
         } else {
           // has two children, find the leftmost node of the right subtree
+          let toSubstitute = findLeftmostChild(currentNode.right.right)
         }
       } else if (currentNode.data > value){
         this.delete(value, currentNode.left)
