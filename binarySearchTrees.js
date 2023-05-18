@@ -88,17 +88,36 @@ function Tree (arr){
       }
     },
     delete: function(value, currentNode = this.root){
-      if (currentNode.data === value && currentNode.left === null && currentNode.right === null){
-        console.log('data to delete found')
-        console.log(currentNode)
-        currentNode = null //working on current node does not update the Tree, can be rewritten using right/left, but there will be A LOT of if statements which I'd like to avoid
-        console.log(currentNode)
+      function isLeaf(node){
+        return (node.left === null && node.right === null)
+      }
+      if (currentNode.left.data === value){//left has value
+        if (isLeaf(currentNode.left)){
+        currentNode.left = null
+        } else if (currentNode.left.left === null){
+          currentNode.left = currentNode.left.right
+        } else if (currentNode.left.right === null){
+          currentNode.left = currentNode.left.left
+        } else {
+          // has two children, find the leftmost node of the right subtree
+        }
+      } else if (currentNode.right.data === value ){//right has value
+        if (isLeaf(currentNode.right)){
+        currentNode.right = null
+        } else if (currentNode.right.left === null){
+          currentNode.right = currentNode.left.right
+        } else if (currentNode.right.right === null){
+          currentNode.right = currentNode.left.left
+        } else {
+          // has two children, find the leftmost node of the right subtree
+        }
       } else if (currentNode.data > value){
         this.delete(value, currentNode.left)
       } else if (currentNode.data < value){
         this.delete(value, currentNode.right)
+      } else if (currentNode === null){
+        return
       }
-
     }
   };
 }
@@ -128,18 +147,19 @@ function buildTree (arr){
 
 
 let exampleArray = [10, 14, 803, 1409, 937, 10743, 2, 702, 103, 81, 36, 7]
-//let exampleArray = [] //also make sure this case works
+//let exampleArray = [1,2,3] //also make sure this case works
 let exampleTree = Tree(exampleArray)
 // prettyPrint(buildTree(exampleArray))
 prettyPrint(exampleTree.root)
 // // //console.log(buildTree(exampleArray))
-console.log(exampleTree.find(1))
-exampleTree.add(1656645)
-exampleTree.add(165664533)
-exampleTree.add(165)
+// console.log(exampleTree.find(1))
+// exampleTree.add(1656645)
+// exampleTree.add(165664533)
+// exampleTree.add(165)
+exampleTree.delete(2)
 prettyPrint(exampleTree.root)
-exampleTree.delete(165)
-prettyPrint(exampleTree.root)
+// exampleTree.delete(165)
+// prettyPrint(exampleTree.root)
 // console.log(exampleTree)
 
 
