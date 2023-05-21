@@ -89,32 +89,42 @@ function Tree(arr) {
     },
     delete: function (value, currentNode = this.root) {
       function findLeftmostChild(value, currentNode) {
+        //console.log(currentNode)
         if (currentNode.left === null) {
-          return currentNode.left;
+          return currentNode;
         } else {
-          findLeftmostChild(value, currentNode.left);
+          return findLeftmostChild(value, currentNode.left);
         }
       }
 
-      if (currentNode === null){
-        return currentNode
-      } 
+      if (currentNode === null) {
+        return currentNode;
+      }
 
       if (currentNode.data > value) {
         currentNode.left = this.delete(value, currentNode.left);
       } else if (currentNode.data < value) {
         currentNode.right = this.delete(value, currentNode.right);
-      } else if (currentNode.data === value){
-        if (currentNode.right === null){
-          return currentNode.left
-        } else if (currentNode.left === null){
-          return currentNode.right
-        } else {//2 children, write this
-
+      } else if (currentNode.data === value) {
+        if (currentNode.right === null) {
+          return currentNode.left;
+        } else if (currentNode.left === null) {
+          return currentNode.right;
+        } else {
+          let toSubstitute = findLeftmostChild(value, currentNode.right);
+          let clonedSubstitute = Node(
+            toSubstitute.data,
+            currentNode.left,
+            currentNode.right
+          );
+          console.log(clonedSubstitute.right);
+          this.delete(toSubstitute.data, clonedSubstitute.right);
+          console.log(clonedSubstitute.right);
+          //the issue is that if the first node of the recursion is returned, there is no assignment (we miss the currentNode.left =... etc)
+          return clonedSubstitute;
         }
       }
-      return currentNode
-
+      return currentNode;
     },
   };
 }
@@ -143,8 +153,8 @@ function buildTree(arr) {
   return root;
 }
 
-let exampleArray = [10, 14, 803, 1409, 937, 10743, 2, 702, 103, 81, 36, 7];
-//let exampleArray = [] //also make sure this case works
+//let exampleArray = [10, 14, 803, 1409, 937, 10743, 2, 702, 103, 81, 36, 7];
+let exampleArray = [1, 2]; //also make sure this case works
 let exampleTree = Tree(exampleArray);
 // prettyPrint(buildTree(exampleArray))
 prettyPrint(exampleTree.root);
@@ -154,7 +164,7 @@ prettyPrint(exampleTree.root);
 // exampleTree.add(165664533)
 // exampleTree.add(165)
 // prettyPrint(exampleTree.root)
-exampleTree.delete(103);
+console.log(exampleTree.delete(1));
 prettyPrint(exampleTree.root);
 // exampleTree.delete(165)
 // prettyPrint(exampleTree.root)
