@@ -89,7 +89,6 @@ function Tree(arr) {
     },
     delete: function (value, currentNode = this.root) {
       function findLeftmostChild(value, currentNode) {
-        //console.log(currentNode)
         if (currentNode.left === null) {
           return currentNode;
         } else {
@@ -97,44 +96,36 @@ function Tree(arr) {
         }
       }
 
-      if (currentNode === null) {
+      this.root = deleteRecursively(value, this.root)
+
+      function deleteRecursively(value, currentNode){
+        if (currentNode === null) {
+          return currentNode;
+        }
+  
+        if (currentNode.data > value) {
+          currentNode.left = deleteRecursively(value, currentNode.left);
+        } else if (currentNode.data < value) {
+          currentNode.right = deleteRecursively(value, currentNode.right);
+        } else if (currentNode.data === value) {
+          if (currentNode.right === null) {
+            return currentNode.left;
+          } else if (currentNode.left === null) {
+            return currentNode.right;
+          } else {
+            let substituteValue = findLeftmostChild(value, currentNode.right).data;
+            currentNode.right = deleteRecursively(substituteValue, currentNode.right)
+            currentNode.data = substituteValue
+            return currentNode;
+          }
+        }
         return currentNode;
       }
 
-      if (currentNode.data > value) {
-        currentNode.left = this.delete(value, currentNode.left);
-      } else if (currentNode.data < value) {
-        currentNode.right = this.delete(value, currentNode.right);
-      } else if (currentNode.data === value) {
-        if (currentNode.right === null) {
-          return currentNode.left;
-        } else if (currentNode.left === null) {
-          return currentNode.right;
-        } else {
-          let toSubstitute = findLeftmostChild(value, currentNode.right);
-          let clonedSubstitute = Node(
-            toSubstitute.data,
-            currentNode.left,
-            currentNode.right
-          );
-          console.log(clonedSubstitute.right);
-          this.delete(toSubstitute.data, clonedSubstitute.right);
-          console.log(clonedSubstitute.right);
-          //the issue is that if the first node of the recursion is returned, there is no assignment (we miss the currentNode.left =... etc)
-          return clonedSubstitute;
-        }
-      }
-      return currentNode;
     },
   };
 }
 
-//
-
-//Write a buildTree function which takes an array of data
-//(e.g. [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-//and turns it into a balanced binary tree full of Node objects appropriately placed
-//(don’t forget to sort and remove duplicates!). The buildTree function should return the level-0 root node.
 function buildTree(arr) {
   if (arr.length === 0) {
     return null;
@@ -153,19 +144,11 @@ function buildTree(arr) {
   return root;
 }
 
+
 //let exampleArray = [10, 14, 803, 1409, 937, 10743, 2, 702, 103, 81, 36, 7];
-let exampleArray = [1, 2]; //also make sure this case works
+let exampleArray = [1, 2,3,4,12,2323]; //also make sure this case works
 let exampleTree = Tree(exampleArray);
-// prettyPrint(buildTree(exampleArray))
+
 prettyPrint(exampleTree.root);
-// // //console.log(buildTree(exampleArray))
-// console.log(exampleTree.find(1))
-//  exampleTree.add(1656645)
-// exampleTree.add(165664533)
-// exampleTree.add(165)
-// prettyPrint(exampleTree.root)
-console.log(exampleTree.delete(1));
-prettyPrint(exampleTree.root);
-// exampleTree.delete(165)
-// prettyPrint(exampleTree.root)
-// console.log(exampleTree)
+
+
