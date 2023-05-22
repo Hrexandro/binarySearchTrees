@@ -95,8 +95,21 @@ function Tree(arr) {
         }
         return currentNode;
       }
-
     },
+    levelOrder: function(appliedFunction, queue = [this.root]){
+      if (queue.length < 1){
+        return
+      }
+      if (queue[0].left){
+        queue.push(queue[0].left)
+      }
+      if (queue[0].right){
+        queue.push(queue[0].right)
+      }
+      appliedFunction(queue[0])
+      queue.shift()
+      this.levelOrder(appliedFunction, queue)
+    }
   };
 }
 
@@ -117,20 +130,21 @@ function buildTree(arr) {
 }
 
 
-//let exampleArray = [10, 14, 803, 1409, 937, 10743, 2, 702, 103, 81, 36, 7];
-let exampleArray = [1, 2,3,4,12,2323]; //also make sure this case works
+let exampleArray = [10, 14, 803, 1409, 937, 10743, 2, 702, 103, 81, 36, 7];
+//let exampleArray = [1, 2,3,4,12,2323]; //also make sure this case works
 let exampleTree = Tree(exampleArray);
-prettyPrint(exampleTree.root)
-exampleTree.delete(3)
-prettyPrint(exampleTree.root);
-exampleTree.delete(4)
-prettyPrint(exampleTree.root);
-exampleTree.delete(12)
-prettyPrint(exampleTree.root);
-exampleTree.delete(2323)
+// prettyPrint(exampleTree.root)
+// exampleTree.delete(3)
+// prettyPrint(exampleTree.root);
+// exampleTree.delete(4)
+// prettyPrint(exampleTree.root);
+// exampleTree.delete(12)
+// prettyPrint(exampleTree.root);
+// exampleTree.delete(2323)
 
 
 
 prettyPrint(exampleTree.root);
+exampleTree.levelOrder(console.log)
 
 
