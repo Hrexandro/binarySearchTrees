@@ -1,29 +1,3 @@
-function mergeSort(array) {
-  if (array.length < 2) {
-    return array;
-  } else {
-    let midPoint = parseInt(array.length / 2);
-    let firstHalf = mergeSort(array.slice(0, midPoint));
-    let secondHalf = mergeSort(array.slice(midPoint, array.length));
-
-    let mergedArray = [];
-
-    while (mergedArray.length < array.length) {
-      if (firstHalf[0] < secondHalf[0]) {
-        mergedArray.push(firstHalf[0]);
-        firstHalf.shift();
-      } else if (secondHalf[0] !== undefined) {
-        //comparing a number to undefined is always false
-        mergedArray.push(secondHalf[0]);
-        secondHalf.shift();
-      } else {
-        mergedArray.push(firstHalf[0]);
-        firstHalf.shift();
-      }
-    }
-    return mergedArray;
-  }
-}
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
     return;
@@ -130,11 +104,9 @@ function buildTree(arr) {
   if (arr.length === 0) {
     return null;
   }
-  let sortedArrWithoutDuplicates = mergeSort(arr).filter(
-    (value, index, array) => {
-      return array.indexOf(value) === index;
-    }
-  );
+
+  let sortedArrWithoutDuplicates = [...new Set(arr)].sort((a,b)=>{ return a - b })
+
   let midPoint = parseInt((sortedArrWithoutDuplicates.length - 1) / 2);
   let rootData = sortedArrWithoutDuplicates[midPoint];
   let left = buildTree(sortedArrWithoutDuplicates.slice(0, midPoint));
@@ -148,6 +120,16 @@ function buildTree(arr) {
 //let exampleArray = [10, 14, 803, 1409, 937, 10743, 2, 702, 103, 81, 36, 7];
 let exampleArray = [1, 2,3,4,12,2323]; //also make sure this case works
 let exampleTree = Tree(exampleArray);
+prettyPrint(exampleTree.root)
+exampleTree.delete(3)
+prettyPrint(exampleTree.root);
+exampleTree.delete(4)
+prettyPrint(exampleTree.root);
+exampleTree.delete(12)
+prettyPrint(exampleTree.root);
+exampleTree.delete(2323)
+
+
 
 prettyPrint(exampleTree.root);
 
