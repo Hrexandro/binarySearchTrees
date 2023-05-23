@@ -72,11 +72,11 @@ function Tree(arr) {
 
       this.root = deleteRecursively(value, this.root)
 
-      function deleteRecursively(value, currentNode){
+      function deleteRecursively(value, currentNode) {
         if (currentNode === null) {
           return currentNode;
         }
-  
+
         if (currentNode.data > value) {
           currentNode.left = deleteRecursively(value, currentNode.left);
         } else if (currentNode.data < value) {
@@ -96,19 +96,80 @@ function Tree(arr) {
         return currentNode;
       }
     },
-    levelOrder: function(appliedFunction, queue = [this.root]){
-      if (queue.length < 1){
+    levelOrder: function (appliedFunction, queue = [this.root]) {
+      if (queue.length < 1) {
         return
       }
-      if (queue[0].left){
+      if (queue[0].left) {
         queue.push(queue[0].left)
       }
-      if (queue[0].right){
+      if (queue[0].right) {
         queue.push(queue[0].right)
       }
-      appliedFunction(queue[0])
+      appliedFunction(queue[0].data)
       queue.shift()
       this.levelOrder(appliedFunction, queue)
+    },
+    // Write inorder, preorder, and postorder functions that accept a function parameter. 
+    // Each of these functions should traverse the tree in their respective depth-first order
+    // and yield each node to the provided function given as an argument.
+    // The functions should return an array of values if no function is given.
+    inorder: function (appliedFunction) {
+      let result = []
+      let startingNode = this.root
+      function traverseInOrder(currentNode = startingNode) {
+        if (currentNode === null) {
+          return
+        } else {
+          traverseInOrder(currentNode.left)
+          result.push(currentNode.data)
+          traverseInOrder(currentNode.right)
+        }
+      }
+      traverseInOrder()
+      if (appliedFunction) {
+        result.forEach((e) => { appliedFunction(e) })
+      } else {
+        return result
+      }
+    },
+    preorder: function (appliedFunction){
+      let result = []
+      let startingNode = this.root
+      function traverseInOrder(currentNode = startingNode) {
+        if (currentNode === null) {
+          return
+        } else {
+          result.push(currentNode.data)
+          traverseInOrder(currentNode.left)
+          traverseInOrder(currentNode.right)
+        }
+      }
+      traverseInOrder()
+      if (appliedFunction) {
+        result.forEach((e) => { appliedFunction(e) })
+      } else {
+        return result
+      }
+    },
+    postorder: function (appliedFunction){
+      let result = []
+      let startingNode = this.root
+      function traverseInOrder(currentNode = startingNode) {
+        if (currentNode === null) {
+          return
+        } else {
+          traverseInOrder(currentNode.left)
+          traverseInOrder(currentNode.right)
+          result.push(currentNode.data)
+        }
+      }
+      traverseInOrder()
+      if (appliedFunction) {
+        result.forEach((e) => { appliedFunction(e) })
+      } else {
+        return result
+      } 
     }
   };
 }
@@ -118,7 +179,7 @@ function buildTree(arr) {
     return null;
   }
 
-  let sortedArrWithoutDuplicates = [...new Set(arr)].sort((a,b)=>{ return a - b })
+  let sortedArrWithoutDuplicates = [...new Set(arr)].sort((a, b) => { return a - b })
 
   let midPoint = parseInt((sortedArrWithoutDuplicates.length - 1) / 2);
   let rootData = sortedArrWithoutDuplicates[midPoint];
@@ -145,6 +206,7 @@ let exampleTree = Tree(exampleArray);
 
 
 prettyPrint(exampleTree.root);
-exampleTree.levelOrder(console.log)
+//exampleTree.levelOrder(console.log)
+
 
 
