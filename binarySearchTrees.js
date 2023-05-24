@@ -110,10 +110,6 @@ function Tree(arr) {
       queue.shift()
       this.levelOrder(appliedFunction, queue)
     },
-    // Write inorder, preorder, and postorder functions that accept a function parameter. 
-    // Each of these functions should traverse the tree in their respective depth-first order
-    // and yield each node to the provided function given as an argument.
-    // The functions should return an array of values if no function is given.
     inorder: function (appliedFunction) {
       let result = []
       let startingNode = this.root
@@ -170,6 +166,25 @@ function Tree(arr) {
       } else {
         return result
       } 
+    },
+    height: function (node){
+      if (node === null){
+        return -1
+      }
+      return 1 + Math.max(this.height(node.right), this.height(node.left))
+    },
+    depth: function(node, currentNode = this.root){
+      if (currentNode === null || node === null){
+        return
+      }
+      if (node === currentNode){
+        return 0
+      }
+      else if (node.data < currentNode.data){
+        return 1 + this.depth(node, currentNode.left)
+      } else {
+        return 1 + this.depth(node, currentNode.right)
+      }
     }
   };
 }
@@ -191,8 +206,9 @@ function buildTree(arr) {
 }
 
 
-let exampleArray = [10, 14, 803, 1409, 937, 10743, 2, 702, 103, 81, 36, 7];
+//let exampleArray = [10, 14, 803, 1409, 937, 10743, 2, 702, 103, 81, 36, 7];
 //let exampleArray = [1, 2,3,4,12,2323]; //also make sure this case works
+let exampleArray = []
 let exampleTree = Tree(exampleArray);
 // prettyPrint(exampleTree.root)
 // exampleTree.delete(3)
@@ -203,9 +219,12 @@ let exampleTree = Tree(exampleArray);
 // prettyPrint(exampleTree.root);
 // exampleTree.delete(2323)
 
-
-
+// exampleTree.add(3)
+// exampleTree.add(4)
+// exampleTree.add(5)
 prettyPrint(exampleTree.root);
+console.log(exampleTree.height(exampleTree.find(833431)))
+//console.log(exampleTree.depth(exampleTree.find(833431)))
 //exampleTree.levelOrder(console.log)
 
 
