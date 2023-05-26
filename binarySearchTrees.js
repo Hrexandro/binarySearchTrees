@@ -70,7 +70,7 @@ function Tree(arr) {
         }
       }
 
-      this.root = deleteRecursively(value, this.root)
+      this.root = deleteRecursively(value, this.root);
 
       function deleteRecursively(value, currentNode) {
         if (currentNode === null) {
@@ -87,9 +87,15 @@ function Tree(arr) {
           } else if (currentNode.left === null) {
             return currentNode.right;
           } else {
-            let substituteValue = findLeftmostChild(value, currentNode.right).data;
-            currentNode.right = deleteRecursively(substituteValue, currentNode.right)
-            currentNode.data = substituteValue
+            let substituteValue = findLeftmostChild(
+              value,
+              currentNode.right
+            ).data;
+            currentNode.right = deleteRecursively(
+              substituteValue,
+              currentNode.right
+            );
+            currentNode.data = substituteValue;
             return currentNode;
           }
         }
@@ -98,94 +104,109 @@ function Tree(arr) {
     },
     levelOrder: function (appliedFunction, queue = [this.root]) {
       if (queue.length < 1) {
-        return
+        return;
       }
       if (queue[0].left) {
-        queue.push(queue[0].left)
+        queue.push(queue[0].left);
       }
       if (queue[0].right) {
-        queue.push(queue[0].right)
+        queue.push(queue[0].right);
       }
-      appliedFunction(queue[0].data)
-      queue.shift()
-      this.levelOrder(appliedFunction, queue)
+      appliedFunction(queue[0].data);
+      queue.shift();
+      this.levelOrder(appliedFunction, queue);
     },
     inorder: function (appliedFunction) {
-      let result = []
-      let startingNode = this.root
+      let result = [];
+      let startingNode = this.root;
       function traverseInOrder(currentNode = startingNode) {
         if (currentNode === null) {
-          return
+          return;
         } else {
-          traverseInOrder(currentNode.left)
-          result.push(currentNode.data)
-          traverseInOrder(currentNode.right)
+          traverseInOrder(currentNode.left);
+          result.push(currentNode.data);
+          traverseInOrder(currentNode.right);
         }
       }
-      traverseInOrder()
+      traverseInOrder();
       if (appliedFunction) {
-        result.forEach((e) => { appliedFunction(e) })
+        result.forEach((e) => {
+          appliedFunction(e);
+        });
       } else {
-        return result
+        return result;
       }
     },
-    preorder: function (appliedFunction){
-      let result = []
-      let startingNode = this.root
+    preorder: function (appliedFunction) {
+      let result = [];
+      let startingNode = this.root;
       function traverseInOrder(currentNode = startingNode) {
         if (currentNode === null) {
-          return
+          return;
         } else {
-          result.push(currentNode.data)
-          traverseInOrder(currentNode.left)
-          traverseInOrder(currentNode.right)
+          result.push(currentNode.data);
+          traverseInOrder(currentNode.left);
+          traverseInOrder(currentNode.right);
         }
       }
-      traverseInOrder()
+      traverseInOrder();
       if (appliedFunction) {
-        result.forEach((e) => { appliedFunction(e) })
+        result.forEach((e) => {
+          appliedFunction(e);
+        });
       } else {
-        return result
+        return result;
       }
     },
-    postorder: function (appliedFunction){
-      let result = []
-      let startingNode = this.root
+    postorder: function (appliedFunction) {
+      let result = [];
+      let startingNode = this.root;
       function traverseInOrder(currentNode = startingNode) {
         if (currentNode === null) {
-          return
+          return;
         } else {
-          traverseInOrder(currentNode.left)
-          traverseInOrder(currentNode.right)
-          result.push(currentNode.data)
+          traverseInOrder(currentNode.left);
+          traverseInOrder(currentNode.right);
+          result.push(currentNode.data);
         }
       }
-      traverseInOrder()
+      traverseInOrder();
       if (appliedFunction) {
-        result.forEach((e) => { appliedFunction(e) })
+        result.forEach((e) => {
+          appliedFunction(e);
+        });
       } else {
-        return result
-      } 
+        return result;
+      }
     },
-    height: function (node){
-      if (node === null){
-        return -1
+    height: function (node = this.root) {
+      if (node === null) {
+        return -1;
       }
-      return 1 + Math.max(this.height(node.right), this.height(node.left))
+      return 1 + Math.max(this.height(node.right), this.height(node.left));
     },
-    depth: function(node, currentNode = this.root){
-      if (currentNode === null || node === null){
-        return
+    depth: function (node, currentNode = this.root) {
+      if (currentNode === null || node === null) {
+        return;
       }
-      if (node === currentNode){
-        return 0
-      }
-      else if (node.data < currentNode.data){
-        return 1 + this.depth(node, currentNode.left)
+      if (node === currentNode) {
+        return 0;
+      } else if (node.data < currentNode.data) {
+        return 1 + this.depth(node, currentNode.left);
       } else {
-        return 1 + this.depth(node, currentNode.right)
+        return 1 + this.depth(node, currentNode.right);
       }
-    }
+    },
+    isBalanced: function (node = this.root) {
+      function minHeight(currentNode = node) {
+        if (currentNode === null) {
+          return -1;
+        }
+        return (1 + Math.min(minHeight(currentNode.right), minHeight(currentNode.left)));
+      }
+
+      return (this.height() - minHeight()) <= 1 ? true : false
+    },
   };
 }
 
@@ -194,7 +215,9 @@ function buildTree(arr) {
     return null;
   }
 
-  let sortedArrWithoutDuplicates = [...new Set(arr)].sort((a, b) => { return a - b })
+  let sortedArrWithoutDuplicates = [...new Set(arr)].sort((a, b) => {
+    return a - b;
+  });
 
   let midPoint = parseInt((sortedArrWithoutDuplicates.length - 1) / 2);
   let rootData = sortedArrWithoutDuplicates[midPoint];
@@ -205,11 +228,11 @@ function buildTree(arr) {
   return root;
 }
 
-
-//let exampleArray = [10, 14, 803, 1409, 937, 10743, 2, 702, 103, 81, 36, 7];
-//let exampleArray = [1, 2,3,4,12,2323]; //also make sure this case works
-let exampleArray = []
+let exampleArray = [10, 14, 803, 1409, 937, 10743, 2, 702, 103, 81, 36, 7];
+//let exampleArray = [1, 2,3,4];
+//let exampleArray = []
 let exampleTree = Tree(exampleArray);
+prettyPrint(exampleTree.root);
 // prettyPrint(exampleTree.root)
 // exampleTree.delete(3)
 // prettyPrint(exampleTree.root);
@@ -218,14 +241,18 @@ let exampleTree = Tree(exampleArray);
 // exampleTree.delete(12)
 // prettyPrint(exampleTree.root);
 // exampleTree.delete(2323)
-
-// exampleTree.add(3)
-// exampleTree.add(4)
-// exampleTree.add(5)
+console.log(exampleTree.isBalanced());
+// exampleTree.add(3);
+// exampleTree.add(4);
+// exampleTree.add(5);
+// exampleTree.delete(803);
+// exampleTree.delete(103);
+// exampleTree.delete(937);
+exampleTree.delete(702);
+exampleTree.delete(1409);
+exampleTree.delete(10743);
 prettyPrint(exampleTree.root);
-console.log(exampleTree.height(exampleTree.find(833431)))
+console.log(exampleTree.height());
+console.log(exampleTree.isBalanced());
 //console.log(exampleTree.depth(exampleTree.find(833431)))
 //exampleTree.levelOrder(console.log)
-
-
-
