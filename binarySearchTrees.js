@@ -204,9 +204,17 @@ function Tree(arr) {
         }
         return (1 + Math.min(minHeight(currentNode.right), minHeight(currentNode.left)));
       }
-
       return (this.height() - minHeight()) <= 1 ? true : false
     },
+    //Write a rebalance function which rebalances an unbalanced tree.
+    //Tip: You’ll want to use a traversal method to provide a new array to the buildTree function.
+    rebalance: function (){
+      let result = []
+      this.inorder((e)=>{result.push(e)})
+      this.root = buildTree(result)
+      return this
+      //level order traversal so is sorted
+    }
   };
 }
 
@@ -242,17 +250,20 @@ prettyPrint(exampleTree.root);
 // prettyPrint(exampleTree.root);
 // exampleTree.delete(2323)
 console.log(exampleTree.isBalanced());
-// exampleTree.add(3);
-// exampleTree.add(4);
-// exampleTree.add(5);
-// exampleTree.delete(803);
-// exampleTree.delete(103);
-// exampleTree.delete(937);
+console.log(exampleTree.rebalance())
+exampleTree.add(3);
+exampleTree.add(4);
+exampleTree.add(5);
+exampleTree.delete(803);
+exampleTree.delete(103);
+exampleTree.delete(937);
 exampleTree.delete(702);
 exampleTree.delete(1409);
 exampleTree.delete(10743);
 prettyPrint(exampleTree.root);
 console.log(exampleTree.height());
 console.log(exampleTree.isBalanced());
+console.log(exampleTree.rebalance())
+prettyPrint(exampleTree.root);
 //console.log(exampleTree.depth(exampleTree.find(833431)))
 //exampleTree.levelOrder(console.log)
