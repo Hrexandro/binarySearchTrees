@@ -213,7 +213,7 @@ function Tree(arr) {
       this.inorder((e)=>{result.push(e)})
       this.root = buildTree(result)
       return this
-      //level order traversal so is sorted
+      //test this some more
     }
   };
 }
