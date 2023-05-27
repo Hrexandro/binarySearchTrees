@@ -206,14 +206,11 @@ function Tree(arr) {
       }
       return (this.height() - minHeight()) <= 1 ? true : false
     },
-    //Write a rebalance function which rebalances an unbalanced tree.
-    //Tip: You’ll want to use a traversal method to provide a new array to the buildTree function.
     rebalance: function (){
       let result = []
       this.inorder((e)=>{result.push(e)})
       this.root = buildTree(result)
       return this
-      //test this some more
     }
   };
 }
@@ -236,34 +233,40 @@ function buildTree(arr) {
   return root;
 }
 
-let exampleArray = [10, 14, 803, 1409, 937, 10743, 2, 702, 103, 81, 36, 7];
-//let exampleArray = [1, 2,3,4];
-//let exampleArray = []
-let exampleTree = Tree(exampleArray);
-prettyPrint(exampleTree.root);
-// prettyPrint(exampleTree.root)
-// exampleTree.delete(3)
-// prettyPrint(exampleTree.root);
-// exampleTree.delete(4)
-// prettyPrint(exampleTree.root);
-// exampleTree.delete(12)
-// prettyPrint(exampleTree.root);
-// exampleTree.delete(2323)
+function createArrayOfRandomNumbers(number = Math.floor(Math.random() * 20) + 1){
+  let result = []
+  for (let i = 0; i < number; i++){
+    result.push(Math.floor(Math.random() * 100) + 1)
+  }
+  return result
+}
+
+let exampleTree = Tree(createArrayOfRandomNumbers())
+prettyPrint(exampleTree.root)
 console.log(exampleTree.isBalanced());
-console.log(exampleTree.rebalance())
-exampleTree.add(3);
-exampleTree.add(4);
-exampleTree.add(5);
-exampleTree.delete(803);
-exampleTree.delete(103);
-exampleTree.delete(937);
-exampleTree.delete(702);
-exampleTree.delete(1409);
-exampleTree.delete(10743);
-prettyPrint(exampleTree.root);
-console.log(exampleTree.height());
+console.log("Level order printout: ")
+exampleTree.levelOrder((e)=>{console.log(e)})
+console.log("Preorder printout: ")
+exampleTree.preorder((e)=>{console.log(e)})
+console.log("Postorder printout: ")
+exampleTree.postorder((e)=>{console.log(e)})
+console.log("Inorder printout: ")
+exampleTree.inorder((e)=>{console.log(e)})
+exampleTree.add((Math.floor(Math.random() * 100) + 100))
+exampleTree.add((Math.floor(Math.random() * 100) + 100))
+exampleTree.add((Math.floor(Math.random() * 100) + 100))
+exampleTree.add((Math.floor(Math.random() * 100) + 100))
+exampleTree.add((Math.floor(Math.random() * 100) + 100))
+prettyPrint(exampleTree.root)
 console.log(exampleTree.isBalanced());
-console.log(exampleTree.rebalance())
-prettyPrint(exampleTree.root);
-//console.log(exampleTree.depth(exampleTree.find(833431)))
-//exampleTree.levelOrder(console.log)
+exampleTree.rebalance()
+prettyPrint(exampleTree.root)
+console.log(exampleTree.isBalanced());
+console.log("Level order printout: ")
+exampleTree.levelOrder((e)=>{console.log(e)})
+console.log("Preorder printout: ")
+exampleTree.preorder((e)=>{console.log(e)})
+console.log("Postorder printout: ")
+exampleTree.postorder((e)=>{console.log(e)})
+console.log("Inorder printout: ")
+exampleTree.inorder((e)=>{console.log(e)})
